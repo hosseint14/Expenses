@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Expenses from "./Components/Expenses/Expenses";
+import NewExpense from "./Components/NewExpense/NewExpense";
 
 function App() {
+  const expenses = [
+    {
+      id:'e1',
+      date: new Date(2021, 8, 12),
+      title: "TV",
+      amount: "298.12",
+    },
+    {
+      id:'e2',
+      date: new Date(2020, 11, 8),
+      title: "Laptop",
+      amount: "328.14",
+    },
+    {
+      id:'e3',
+      date: new Date(2019, 4, 23),
+      title: "Desk",
+      amount: "450.25",
+    },
+  ];
+
+  const [newData,setNewData]=useState(expenses)
+const addData=(expenses)=>{
+setNewData((prevExpenses)=>{
+  return(
+    [expenses,...prevExpenses]
+  )
+})
+}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewExpense onAddData={addData}/>
+      <Expenses items={newData} />
     </div>
   );
 }
